@@ -1,0 +1,25 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:8.0
+    restart: always
+    container_name: base-db
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+    volumes:
+      - ./mysql:/var/lib/mysql
+    ports:
+      - '3305:3306'
+  app:
+      build: .
+      container_name: base-app
+      ports:
+      - '8000:3000'
+      restart: always
+      volumes:
+      - .:/hoaNK/src/app
+      command: 'yarn start'
+      depends_on:
+        - mysql
