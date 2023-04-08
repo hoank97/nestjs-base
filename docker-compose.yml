@@ -7,21 +7,19 @@ services:
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      # MYSQL_USER: ${DB_USERNAME}
     volumes:
       - ./mysql:/var/lib/mysql
     ports:
       - '3303:3306'
-  # app:
-  #     build: .
-  #     container_name: base-app
-  #     ports:
-  #     - '8000:3000'
-  #     restart: always
-  #     volumes:
-  #     - .:/hoaNK/src/app
-  #     # command: 'yarn start'
-  #     depends_on:
-  #       - db
+  app:
+      build: .
+      container_name: base-app
+      ports:
+      - '8000:8000'
+      restart: always
+      volumes:
+      - .:/hoaNK/src/app
+      depends_on:
+        - db
 volumes:
   mysql-data:
