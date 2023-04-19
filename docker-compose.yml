@@ -13,12 +13,12 @@ services:
       - '3303:3306'
   app:
       build: .
-      container_name: base-app
+      container_name: app-base
       ports:
       - '8000:8000'
       restart: always
       volumes:
-      - .:/hoaNK/src/app
+      - .:/usr/src/app
       depends_on:
         - db
   mailhog:
