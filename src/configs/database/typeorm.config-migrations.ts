@@ -1,3 +1,3 @@
-import { OPTION } from './typeorm.config';
+// import { OPTION } from './typeorm.config';
 
-export default OPTION;
+// export default OPTION;

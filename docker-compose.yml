@@ -3,7 +3,7 @@ services:
   db:
     image: mysql:8.0
     restart: always
-    container_name: base-db
+    container_name: db
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
@@ -21,5 +21,12 @@ services:
       - .:/hoaNK/src/app
       depends_on:
         - db
+  mailhog:
+    image: mailhog/mailhog
+    logging:
+      driver: 'none'  # disable saving logs
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui
 volumes:
   mysql-data:

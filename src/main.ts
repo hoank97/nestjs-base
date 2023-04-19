@@ -10,9 +10,8 @@ async function bootstrap() {
     logger: ['error', 'debug', 'warn', 'log'],
   });
   app.useGlobalFilters(new HttpExceptionFilter());
-  const PORT = process.env.PORT;
-  const HOST = process.env.HOST;
-
+  const PORT = process.env.SERVER_PORT;
+  const HOST = process.env.SERVER_HOST;
   const config = new DocumentBuilder()
     .setTitle(APPLICATION)
     .setDescription(DESCRIPTION)
@@ -29,4 +28,5 @@ async function bootstrap() {
     );
   });
 }
+
 bootstrap();
