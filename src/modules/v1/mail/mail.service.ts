@@ -1,29 +1,28 @@
 import { Injectable } from '@nestjs/common';
-import * as nodemailer from 'nodemailer';
 import { CreateMailDto } from './dto/create-mail.dto';
+import { InjectQueue } from '@nestjs/bull';
+import { Queue } from 'bull';
+import { IMail } from './interfaces/mail.interface';
 
 @Injectable()
 export class MailService {
-  private transporter;
+  constructor(@InjectQueue('sendMail') private mail: Queue) {}
 
-  constructor() {
-    this.transporter = nodemailer.createTransport({
-      host: process.env.MAIL_HOST,
-      port: Number(process.env.MAIL_PORT),
-      secure: false,
-      auth: {
-        user: process.env.MAIL_ID,
-        pass: process.env.MAIL_PASSWORD,
-      },
+  addJob(data: IMail) {
+    this.mail.add('sendMail', data, {
+      jobId: data.to + new Date().getTime().toString(),
+      // delay: 10000,
     });
   }
 
-  sendMail(data: CreateMailDto): void {
-    this.transporter.sendMail({
+  sendMail(param: CreateMailDto) {
+    const data: IMail = {
       from: `"${process.env.APP_NAME}" <${process.env.MAIL_ID}>`,
-      to: data.receiver,
-      subject: data.subject,
-      text: data.text,
-    });
+      to: param.receiver,
+      subject: param.subject,
+      text: param.text,
+    };
+
+    this.addJob(data);
   }
 }
