@@ -10,10 +10,7 @@ import { UploadModule } from '../v1/upload/upload.module';
 import { MailModule } from '../v1/mail/mail.module';
 import { BullModule } from '@nestjs/bull';
 import { LOCAL_ENV } from 'src/constants/variables.constants';
-import {
-  OPTION_DOCKER,
-  OPTION_LOCAL,
-} from 'src/configs/database/typeorm.config';
+import { OPTION_DOCKER, OPTION_LOCAL } from 'src/configs';
 
 @Module({
   imports: [
