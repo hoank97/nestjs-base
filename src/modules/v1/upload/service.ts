@@ -1,12 +1,12 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { UpdateUploadDto } from './dto/update-upload.dto';
+import { UpdateUploadDto } from './dto/update-upload';
 import * as cloudinary from 'cloudinary';
 import * as fs from 'fs-extra';
-import { IResponse } from '../../../interfaces/index';
+import { IResponse } from '../../../commons/interfaces/index';
 
 @Injectable()
 export class UploadService {
-  async create(file: Express.Multer.File): Promise<IResponse> {
+  async create(file: Express.Multer.File): Promise<IResponse<string>> {
     const time = new Date().getTime().toString();
     const res = cloudinary.v2.uploader.upload(file.path, {
       public_id: time,
@@ -18,7 +18,7 @@ export class UploadService {
 
     return {
       statusCode: HttpStatus.OK,
-      message: 'Successful',
+      data: 'Successful',
     };
   }
 

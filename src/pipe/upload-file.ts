@@ -3,7 +3,10 @@ import {
   BadRequestException,
   Injectable,
 } from '@nestjs/common';
-import { FILE_SIZE, FILE_TYPE } from 'src/constants/variables.constants';
+import {
+  FILE_SIZE,
+  FILE_TYPE,
+} from 'src/commons/constants/variables.constants';
 
 @Injectable()
 export class FileValidatorPipe {

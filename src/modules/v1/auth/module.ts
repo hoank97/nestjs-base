@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
-import { GoogleStrategy } from 'src/configs/oAuth2.config';
+import { AuthService } from './service';
+import { AuthController } from './controller';
+import { GoogleStrategy } from 'src/configs/oAuth2';
 import { HttpModule } from '@nestjs/axios';
 
 @Module({

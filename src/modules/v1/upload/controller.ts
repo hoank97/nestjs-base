@@ -9,8 +9,8 @@ import {
   UseInterceptors,
   UploadedFile,
 } from '@nestjs/common';
-import { UploadService } from './upload.service';
-import { UpdateUploadDto } from './dto/update-upload.dto';
+import { UploadService } from './service';
+import { UpdateUploadDto } from './dto/update-upload';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileValidatorPipe } from 'src/pipe/upload-file';
 

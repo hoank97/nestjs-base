@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { MailService } from './mail.service';
-import { MailController } from './mail.controller';
+import { MailService } from './service';
+import { MailController } from './controller';
 import { BullModule } from '@nestjs/bull';
-import { MailProcessor } from './mail.processor';
+import { MailProcessor } from './processor';
 
 @Module({
   imports: [BullModule.registerQueue({ name: 'sendMail' })],

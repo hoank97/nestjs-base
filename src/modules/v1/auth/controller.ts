@@ -13,9 +13,9 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
-import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { AuthService } from './service';
+import { CreateAuthDto } from './dto/create-auth';
+import { UpdateAuthDto } from './dto/update-auth';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -31,8 +31,8 @@ export class AuthController {
   @Get('google/redirect')
   @UseGuards(AuthGuard('google'))
   googleAuthRedirect(@Req() req) {
-    console.log({ req: req.user });
-    return this.authService.googleLogin(req);
+    const rs = this.authService.googleLogin(req);
+    console.log(rs);
   }
 
   @ApiQuery({
@@ -48,7 +48,6 @@ export class AuthController {
     @Query('token') token: string,
     @Query('email') email: string,
   ) {
-    console.log({ token });
     return this.authService.verifyTokenGoogle(token, email);
   }
 }

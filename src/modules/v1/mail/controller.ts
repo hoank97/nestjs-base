@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { MailService } from './mail.service';
+import { MailService } from './service';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateMailDto } from './dto/create-mail.dto';
+import { CreateMailDto } from './dto/create-mail';
 
 @Controller('mail')
 @ApiTags('Mail')

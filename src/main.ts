@@ -1,9 +1,12 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { AppModule } from 'src/modules/app/app.module';
-import { APPLICATION, DESCRIPTION } from './constants/variables.constants';
-import { HttpExceptionFilter } from './filters/http-exception.filter';
+import { AppModule } from 'src/modules/app/module';
+import {
+  APPLICATION,
+  DESCRIPTION,
+} from './commons/constants/variables.constants';
+import { HttpExceptionFilter } from './commons/filters/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {

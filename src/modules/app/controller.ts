@@ -1,5 +1,5 @@
 import { Controller, Get, HttpException } from '@nestjs/common';
-import { AppService } from './app.service';
+import { AppService } from './service';
 
 @Controller()
 export class AppController {

@@ -2,8 +2,8 @@ import { HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs';
-import { URL } from './auth.constants';
-import { IResponse } from 'src/interfaces';
+import { URL } from './constants';
+import { IResponse } from 'src/commons/interfaces';
 
 ConfigModule.forRoot({
   envFilePath: './.env',
@@ -24,7 +24,10 @@ export class AuthService {
     };
   }
 
-  async verifyTokenGoogle(token: string, email: string): Promise<IResponse> {
+  async verifyTokenGoogle(
+    token: string,
+    email: string,
+  ): Promise<IResponse<string>> {
     try {
       const payload = await lastValueFrom(this.httpService.get(URL + token));
       console.log({ data: payload.data });
@@ -32,7 +35,7 @@ export class AuthService {
       if (payload.data.email === email) {
         return {
           statusCode: HttpStatus.OK,
-          message: 'Account verified',
+          data: 'Account verified',
         };
       }
     } catch (err) {

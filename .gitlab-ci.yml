@@ -26,16 +26,23 @@ cache:
     - node_modules/
 
 test_async:
+  tags:
+    - local
   script:
     - yarn install
-    - node ./specs/start.js ./specs/async.spec.js
+    - yarn run test
+    # - node ./specs/start.js ./specs/async.spec.js
 
-test_db:
-  script:
-    - yarn install
-    - node ./specs/start.js ./specs/db-postgres.spec.js
+# test_db:
+#   tags:
+#     - local
+#   script:
+#     - yarn install
+#     - node ./specs/start.js ./specs/db-postgres.spec.js
 
 deploy:
+  tags:
+    - local
   stage: deploy
   script: echo "Define your deployment script!"
   environment: production
