@@ -1,12 +1,16 @@
 import { Module } from '@nestjs/common';
 import { AuthService } from './service';
 import { AuthController } from './controller';
-import { GoogleStrategy } from 'src/configs/oAuth2';
-import { HttpModule } from '@nestjs/axios';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Cat, CatSchema } from './entities/model';
+import { RedisCacheModule } from '../cache/module';
 
 @Module({
-  imports: [HttpModule],
+  imports: [
+    MongooseModule.forFeature([{ name: Cat.name, schema: CatSchema }]),
+    RedisCacheModule,
+  ],
   controllers: [AuthController],
-  providers: [AuthService, GoogleStrategy],
+  providers: [AuthService],
 })
 export class AuthModule {}

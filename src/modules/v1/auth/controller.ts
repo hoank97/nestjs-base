@@ -1,53 +1,24 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  UseGuards,
-  Req,
-  Query,
-} from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import { ApiQuery, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './service';
-import { CreateAuthDto } from './dto/create-auth';
-import { UpdateAuthDto } from './dto/update-auth';
+import { RedisCacheService } from '../cache/services';
+import { randomCode } from 'src/commons/ultis';
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly cacheService: RedisCacheService,
+  ) {}
 
-  @Get('google')
-  @UseGuards(AuthGuard('google'))
-  async googleAuth(@Req() req) {
-    //
+  @Post()
+  test(@Body() body: any) {
+    return this.cacheService.set('key', randomCode(6));
   }
 
-  @Get('google/redirect')
-  @UseGuards(AuthGuard('google'))
-  googleAuthRedirect(@Req() req) {
-    const rs = this.authService.googleLogin(req);
-    console.log(rs);
-  }
-
-  @ApiQuery({
-    name: 'token',
-    type: String,
-  })
-  @ApiQuery({
-    name: 'email',
-    type: String,
-  })
-  @Get('google/verify')
-  async verifyTokenGoogle(
-    @Query('token') token: string,
-    @Query('email') email: string,
-  ) {
-    return this.authService.verifyTokenGoogle(token, email);
+  @Get()
+  get() {
+    return this.cacheService.get('key');
   }
 }

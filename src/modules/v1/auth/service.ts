@@ -1,45 +1,18 @@
-import { HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { HttpService } from '@nestjs/axios';
-import { lastValueFrom } from 'rxjs';
-import { URL } from './constants';
-import { IResponse } from 'src/commons/interfaces';
-
-ConfigModule.forRoot({
-  envFilePath: './.env',
-});
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Cat } from './entities/model';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(@InjectModel(Cat.name) private catModel: Model<Cat>) {}
 
-  googleLogin(req) {
-    if (!req.user) {
-      return 'No user from google';
-    }
-
-    return {
-      message: 'User information from google',
-      user: req.user,
-    };
+  async create(createCatDto: any): Promise<Cat> {
+    const createdCat = new this.catModel(createCatDto);
+    return createdCat.save();
   }
 
-  async verifyTokenGoogle(
-    token: string,
-    email: string,
-  ): Promise<IResponse<string>> {
-    try {
-      const payload = await lastValueFrom(this.httpService.get(URL + token));
-      console.log({ data: payload.data });
-      console.log(payload.data.email);
-      if (payload.data.email === email) {
-        return {
-          statusCode: HttpStatus.OK,
-          data: 'Account verified',
-        };
-      }
-    } catch (err) {
-      throw new UnauthorizedException('Unauthorize');
-    }
+  async findAll(): Promise<Cat[]> {
+    return this.catModel.find().exec();
   }
 }

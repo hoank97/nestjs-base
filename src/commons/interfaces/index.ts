@@ -1,4 +1,3 @@
-export interface IResponse<T> {
-  statusCode: number;
-  data: T;
-}
+export * from './response';
+export * from './base-service';
+export * from './http-exceptions.interface';

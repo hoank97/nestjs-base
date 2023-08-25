@@ -1,12 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   ArgumentMetadata,
   BadRequestException,
   Injectable,
 } from '@nestjs/common';
-import {
-  FILE_SIZE,
-  FILE_TYPE,
-} from 'src/commons/constants/variables.constants';
+import { FILE_SIZE, FILE_TYPE } from 'src/modules/app/config';
 
 @Injectable()
 export class FileValidatorPipe {

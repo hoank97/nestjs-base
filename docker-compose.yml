@@ -1,46 +1,36 @@
 version: '3'
 services:
   db:
-    image: mysql:8.0
-    restart: always
-    container_name: base-db
+    image: mongo
+    restart: unless-stopped
     environment:
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-    volumes:
-      - ./mysql:/var/lib/mysql
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MONGO_INITDB_DATABASE: base
     ports:
-      - '3303:3306'
+      - ${DB_PORT}:${DB_PORT}
+    volumes:
+      - base:/data/db
+    logging:
+      driver: none
   cache:
-    container_name: base-redis
-    image: redis:6.2-alpine
-    restart: always
-    ports:
-     - ${REDIS_PORT}:${REDIS_PORT}
-    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
-    volumes:
-      - cache:/data
+    image: redis:7.0.12-alpine
+    restart: unless-stopped
+    expose:
+      - 6379
+    logging:
+      driver: none
   app:
-      build: .
-      container_name: base-app
-      ports:
-      - '8000:8000'
-      restart: always
-      volumes:
+    build: .
+    container_name: base-app
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    restart: unless-stopped
+    volumes:
       - .:/var/www/app
       - /var/www/app/node_modules
-      depends_on:
-        - db
-        - cache
-  # mailhog:
-  #   image: mailhog/mailhog
-  #   logging:
-  #     driver: 'none'  # disable saving logs
-  #   ports:
-  #     - 1025:1025 # smtp server
-  #     - 8025:8025 # web ui
-  # cache:
+    depends_on:
+      - db
+      - cache
 volumes:
-  mysql-data:
-  cache:
-    driver: local
+  base:

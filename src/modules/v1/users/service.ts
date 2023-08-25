@@ -1,21 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { BaseRepository } from 'src/commons/database';
-import { MyLogger } from 'src/commons/logging/logger.service';
+import { LogService } from 'src/commons/logging/logger.service';
 import { CreateUserDto } from './dto/create-user';
-import { UserEntity } from './entities/user.entity';
-import { IUser } from './interfaces';
-import UserRepository from './repository';
 
 @Injectable()
-export class UsersService extends BaseRepository<UserEntity> {
-  constructor(private myLogger: MyLogger, model: UserRepository) {
-    super(model);
+export class UsersService {
+  constructor(private myLogger: LogService) {
     this.myLogger.setContext(UsersService.name);
   }
 
   async create(data: CreateUserDto) {
-    console.log({ data });
-    return this.model.save(data);
+    return data;
   }
 
   async findAll() {
@@ -23,8 +17,8 @@ export class UsersService extends BaseRepository<UserEntity> {
     return `This action returns all users`;
   }
 
-  async findOne(id: number): Promise<IUser> {
-    return this.model.findOne(id);
+  async findOne(id: number) {
+    return `This action return a #${id} user`;
   }
 
   async remove(id: number) {

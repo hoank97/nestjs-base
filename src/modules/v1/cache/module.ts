@@ -1,4 +1,5 @@
-import { CacheModule, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
+import { CacheModule } from '@nestjs/cache-manager';
 import * as redisStore from 'cache-manager-redis-store';
 import { RedisCacheService } from './services';
 
@@ -6,7 +7,7 @@ import { RedisCacheService } from './services';
   imports: [
     CacheModule.register({
       store: redisStore,
-      host: 'localhost',
+      host: 'cache',
       port: 6379,
     }),
   ],
