@@ -7,6 +7,8 @@ import { AppController } from './controller';
 import { AppService } from './service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppConfig } from './config';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { ProductsModule } from '../v1/products/products.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { AppConfig } from './config';
     MongooseModule.forRoot(AppConfig.MongoDB.uri, AppConfig.MongoDB.option),
     AuthModule,
     UsersModule,
+    ProductsModule,
+    EventEmitterModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService],

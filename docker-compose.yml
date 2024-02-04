@@ -16,8 +16,10 @@ services:
   cache:
     image: redis:7.0.12-alpine
     restart: unless-stopped
-    expose:
-      - 6379
+    # expose:
+    #   - 6379
+    ports:
+      - 6379:6379
     logging:
       driver: none
   app:

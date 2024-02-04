@@ -10,9 +10,7 @@ export function configHttp(app: INestApplication) {
   });
   app.setGlobalPrefix('api/v1/');
   app.useGlobalFilters(new HttpExceptionFilter());
-  app.useGlobalPipes(
-    new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
-  );
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
   const PORT = process.env.SERVER_PORT;
   const HOST = process.env.SERVER_HOST;

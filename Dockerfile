@@ -1,22 +1,11 @@
-FROM node:18-alpine
-
-# Create app directory
-WORKDIR /var/www/app
-
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
+FROM node:18-alpine as stage1
+WORKDIR /app
 COPY package*.json ./
-
 RUN yarn install
-# If you are building your code for production
-# RUN npm ci --only=production
-
-# Bundle app source
 COPY . .
 
+FROM node:18-alpine as main
+COPY --from=stage1 /app /
 RUN yarn run build
-
 EXPOSE 3000
-
 CMD [ "yarn", "start" ]
