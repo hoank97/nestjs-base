@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { AuthService } from './service';
-import { RedisCacheService } from '../cache/services';
+import { AuthService } from './auth.service';
+import { RedisCacheService } from '../cache/cache.services';
 import { randomCode } from 'src/commons/ultis';
 
 @ApiTags('Auth')

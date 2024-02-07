@@ -6,27 +6,25 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 @Injectable()
 export class UsersService {
   constructor(
-    private myLogger: LogService,
+    private logger: LogService,
     private eventEmitter: EventEmitter2,
-  ) {
-    this.myLogger.setContext(UsersService.name);
-  }
+  ) {}
 
   async create(data: CreateUserDto) {
     this.eventEmitter.emit('order.created', {
       orderId: 1,
       payload: {},
     });
-    console.log(data);
     return data;
   }
 
   async findAll() {
-    this.myLogger.log('This action returns all users');
-    return `This action returns all users`;
+    this.logger.error(UsersService.name, 'Logging an error');
+    return `This action returns all users22`;
   }
 
   async findOne(id: number) {
+    this.logger.debug(UsersService.name, 'Logging an debug');
     return `This action return a #${id} user`;
   }
 

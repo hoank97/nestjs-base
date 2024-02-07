@@ -1,6 +1,6 @@
 import * as redisStore from 'cache-manager-redis-store';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('dotenv').config();
+import { config } from 'dotenv';
+config();
 
 export const RedisConfig = {
   store: redisStore,

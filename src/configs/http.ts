@@ -1,6 +1,6 @@
 import { INestApplication, Logger, ValidationPipe } from '@nestjs/common';
 import { HttpExceptionFilter } from '../commons/filters/http-exception.filter';
-import { APPLICATION } from 'src/modules/app/config';
+import { APPLICATION } from 'src/modules/app/app.config';
 
 export function configHttp(app: INestApplication) {
   app.enableCors({

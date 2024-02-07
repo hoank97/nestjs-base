@@ -4,7 +4,7 @@ import {
   BadRequestException,
   Injectable,
 } from '@nestjs/common';
-import { FILE_SIZE, FILE_TYPE } from 'src/modules/app/config';
+import { FILE_SIZE, FILE_TYPE } from 'src/modules/app/app.config';
 
 @Injectable()
 export class FileValidatorPipe {

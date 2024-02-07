@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './service';
-import { AuthController } from './controller';
+import { AuthService } from './auth.service';
+import { AuthController } from './auth.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Cat, CatSchema } from './entities/model';
-import { RedisCacheModule } from '../cache/module';
+import { RedisCacheModule } from '../cache/cache.module';
 
 @Module({
   imports: [
