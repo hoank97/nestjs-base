@@ -1,10 +1,24 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
 
-@Entity('users')
-export class UserEntity extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  readonly id: number;
+export type UserDocument = HydratedDocument<User>;
 
-  @Column()
-  readonly name: string;
+@Schema()
+export class User {
+  @Prop()
+  _id: string;
+
+  @Prop()
+  email: string;
+
+  @Prop()
+  password: string;
+
+  @Prop()
+  name: string;
+
+  @Prop()
+  age: number;
 }
+
+export const UserSchema = SchemaFactory.createForClass(User);

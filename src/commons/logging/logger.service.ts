@@ -4,7 +4,7 @@ import * as winston from 'winston';
 import { format } from 'winston';
 
 @Injectable()
-export class LogService {
+export class LoggingService {
   private readonly logger: winston.Logger;
 
   private printFormat = format.printf(({ path, level, message, timestamp }) => {

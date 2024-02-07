@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { LogService } from 'src/commons/logging/logger.service';
+import { LoggingService } from 'src/commons/logging/logger.service';
 import { CreateUserDto } from './dto/create-user';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class UsersService {
   constructor(
-    private logger: LogService,
+    private logger: LoggingService,
     private eventEmitter: EventEmitter2,
   ) {}
 

@@ -8,6 +8,5 @@ export class ProductsService {
   @OnEvent('order.created')
   handleOrderCreatedEvent(payload: any) {
     this.logger.debug('Handle event');
-    console.log(payload);
   }
 }

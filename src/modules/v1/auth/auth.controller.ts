@@ -1,24 +1,33 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Post, UseGuards, Request } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
-import { RedisCacheService } from '../cache/cache.services';
-import { randomCode } from 'src/commons/ultis';
+import { LoginDto, RefreshTokenDto, RegisterDto } from './dto';
+import { AuthGuard } from 'src/commons/guards/auth.guard';
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly cacheService: RedisCacheService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
-  @Post()
-  test(@Body() body: any) {
-    return this.cacheService.set('key', randomCode(6));
+  @Post('register')
+  register(@Body() payload: RegisterDto) {
+    return this.authService.register(payload);
   }
 
-  @Get()
-  get() {
-    return this.cacheService.get('key');
+  @Post('login')
+  login(@Body() payload: LoginDto) {
+    return this.authService.login(payload);
+  }
+
+  @Post('refresh-token')
+  getNewToken(@Body() payload: RefreshTokenDto) {
+    return this.authService.getNewToken(payload);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @Get('logout')
+  logout(@Request() req) {
+    return this.authService.logout(req.email);
   }
 }
